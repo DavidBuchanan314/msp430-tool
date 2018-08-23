@@ -28,7 +28,7 @@ for line in instream.readlines():
 			data = []
 			instructions = line.split(" ")
 			for inst in instructions:
-				if not re.match(r"[0-9a-f]{4}", inst):
+				if not re.match(r"^[0-9a-f]{4}$", inst):
 					break
 				data += [int(inst[:2], 0x10), int(inst[2:], 0x10)]
 			memory[address:address+len(data)] = data

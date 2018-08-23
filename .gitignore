@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Debugging artefacts
+.gdb_history
+peda-session*
+
+msp430-tool

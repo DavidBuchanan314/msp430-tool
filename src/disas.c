@@ -113,6 +113,8 @@ static void unparse_arg(char *buf, size_t buflen, register_t reg, addrmode_t mod
 				snprintf(buf+strlen(buf), buflen-strlen(buf), "@%s+", REGNAME[reg]);
 			}
 			break;
+		default: // should never happen... TODO: handle it happening, anyway
+			break;
 	}
 }
 
@@ -141,7 +143,7 @@ size_t unparse_insn(char *buf, size_t buflen, insn_t* insn)
 		
 		/* if we reached here, we found an alias/"emulated" opcode */
 		strncpy(buf, EMU_FMTS[i].mnemonic, strlen(EMU_FMTS[i].mnemonic));
-		if (insn->datasize) strncpy(strchr(buf, ' '), ".B", 2); // XXX hacky
+		if (insn->datasize) memcpy(strchr(buf, ' '), ".B", 2); // XXX hacky
 		
 		if (EMU_FMTS[i].print_src) {
 			unparse_arg(buf, buflen, insn->src_reg, insn->src_mode, insn->src_addr, insn->addr);
@@ -153,7 +155,7 @@ size_t unparse_insn(char *buf, size_t buflen, insn_t* insn)
 	}
 
 	strncpy(buf, OP_INFO[insn->fmt][insn->opcode].mnemonic, strlen(OP_INFO[insn->fmt][insn->opcode].mnemonic));
-	if (insn->datasize) strncpy(strchr(buf, ' '), ".B", 2); // XXX hacky
+	if (insn->datasize) memcpy(strchr(buf, ' '), ".B", 2); // XXX hacky
 
 	switch (insn->fmt) {
 		case IF_1OP:
